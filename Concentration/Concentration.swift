@@ -48,13 +48,36 @@ class Concentration {
             }
         }
     }
+    
+    private func shuffle() {
+        for i in stride(from: cards.count - 1, to: 1, by: -1) {
+            let random = i.arc4random
+            self.cards.swapAt(i, random)
+        }
+    }
 
-    init(numberOfPairsOfCards: Int) {
-        assert(numberOfPairsOfCards > 0, "Concentration.init(\(numberOfPairsOfCards)): you must have at least one pair of cards")
+    init(numberOfPairsOfCards: Int, emojis: [String]) {
+        assert(numberOfPairsOfCards > 0, "Concentration.init(numberOfPairsOfCards\(numberOfPairsOfCards)): you must have at least one pair of cards")
+        assert(numberOfPairsOfCards < emojis.count, "Concentration.init(numberOfPairsOfCards: \(numberOfPairsOfCards), emojis: \(emojis)): you must have the same or more pairs of cards than emojis")
+        
+        var e = emojis
         for _ in 0..<numberOfPairsOfCards {
-            let card = Card()
+            let emoji = e.remove(at: e.count.arc4random)
+            let card = Card(emoji: emoji)
             cards += [card, card]
         }
-        // TODO: Shuffle the Cards
+        shuffle()
+    }
+}
+
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        } else {
+            return 0
+        }
     }
 }
