@@ -11,6 +11,8 @@ import Foundation
 class Concentration {
     private(set) var cards = [Card]()
     
+    private(set) var flipCount = 0
+    
     private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
             var foundIndex: Int?
@@ -30,6 +32,14 @@ class Concentration {
                 cards[index].isFaceUp = (index == newValue)
             }
         }
+    }
+    
+    func incrementFlipCount() {
+        flipCount = flipCount + 1
+    }
+    
+    func resetFlipCount() {
+        flipCount = 0
     }
     
     func chooseCard(at index: Int) {

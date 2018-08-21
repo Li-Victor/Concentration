@@ -26,18 +26,14 @@ class ViewController: UIViewController {
         return (cardButtons.count + 1) / 2
     }
     
-    private(set) var flipCount = 0 {
-        didSet {
-            flipCountLabel.text = "Flips: \(flipCount)"
-        }
-    }
     
     @IBOutlet private weak var flipCountLabel: UILabel!
     
     @IBOutlet private var cardButtons: [UIButton]!
     
     @IBAction private func touchCard(_ sender: UIButton) {
-        flipCount += 1
+        // increment flip count and update views
+        game.incrementFlipCount()
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
@@ -48,7 +44,8 @@ class ViewController: UIViewController {
     
     @IBAction func touchNewGame() {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: randomTheme())
-        flipCount = 0
+        // reset flip count and update views
+        game.resetFlipCount()
         updateViewFromModel()
     }
     
@@ -65,6 +62,7 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
         }
+        flipCountLabel.text = "Flips: \(game.flipCount)"
     }
 }
 
