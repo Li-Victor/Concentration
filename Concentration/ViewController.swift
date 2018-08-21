@@ -9,10 +9,18 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private var emojiChoices = ["🎃", "👻", "😱", "😈", "👽", "🦄", "🧣"]
+    private var scaryTheme = ["🎃", "👻", "😱", "😈", "👽", "🙀", "👹", "🤡"]
+    private var animalTheme = ["🐶", "🐱", "🦊", "🐸", "🐔", "🐨", "🐧", "🦄"]
+    private var sportsTheme = ["⚽️", "🏀", "🏈", "⚾️", "🎾", "🏓", "🏐", "🎱"]
+    private var faceTheme = ["🤔", "😀", "😁", "😍", "😕", "😘", "😛", "😓"]
     
-    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: emojiChoices)
     
+    func randomTheme() -> [String] {
+        let allThemes = [scaryTheme, animalTheme, sportsTheme, faceTheme]
+        return allThemes[allThemes.count.arc4random]
+    }
+    
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: randomTheme())
     
     var numberOfPairsOfCards: Int {
         return (cardButtons.count + 1) / 2
@@ -39,7 +47,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func touchNewGame() {
-        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: emojiChoices)
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: randomTheme())
+        flipCount = 0
         updateViewFromModel()
     }
     
@@ -55,6 +64,18 @@ class ViewController: UIViewController {
                 button.setTitle("", for: UIControlState.normal)
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
+        }
+    }
+}
+
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        } else {
+            return 0
         }
     }
 }
