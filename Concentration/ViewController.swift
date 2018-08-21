@@ -38,6 +38,11 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func touchNewGame() {
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: emojiChoices)
+        updateViewFromModel()
+    }
+    
     private func updateViewFromModel() {
         for index in cardButtons.indices {
             let button = cardButtons[index]
