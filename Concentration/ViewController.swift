@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func touchNewGame() {
+        // assign game to a new Concentration game
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards, emojis: randomTheme())
         // reset flip count and update views
         game.resetFlipCount()
@@ -75,7 +76,7 @@ class ViewController: UIViewController {
             .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
         ]
         
-        let attributedString = NSAttributedString(string: "Flips \(game.flipCount)", attributes: attributes)
+        let attributedString = NSAttributedString(string: "Flips: \(game.flipCount) | Score: \(game.score)", attributes: attributes)
         
         flipCountLabel.attributedText = attributedString
     }
