@@ -8,24 +8,14 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     private(set) var cards = [Card]()
     
     private(set) var flipCount = 0
     
     private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
-            var foundIndex: Int?
-            for index in cards.indices {
-                if cards[index].isFaceUp {
-                    if foundIndex == nil {
-                        foundIndex = index
-                    } else {
-                        return nil
-                    }
-                }
-            }
-            return foundIndex
+            return cards.indices.filter { cards[$0].isFaceUp }.oneAndOnly
         }
         set {
             for index in cards.indices {
@@ -34,21 +24,21 @@ class Concentration {
         }
     }
     
-    func incrementFlipCount() {
+    mutating func incrementFlipCount() {
         flipCount = flipCount + 1
     }
     
-    func resetFlipCount() {
+    mutating func resetFlipCount() {
         flipCount = 0
     }
     
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index not in cards)")
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 // check if cards match
                 
-                if cards[matchIndex].identifier == cards[index].identifier {
+                if cards[matchIndex] == cards[index] {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
                 }
@@ -59,7 +49,7 @@ class Concentration {
         }
     }
     
-    private func shuffle() {
+    private mutating func shuffle() {
         for i in stride(from: cards.count - 1, to: 1, by: -1) {
             let random = i.arc4random
             self.cards.swapAt(i, random)
@@ -77,5 +67,11 @@ class Concentration {
             cards += [card, card]
         }
         shuffle()
+    }
+}
+
+extension Collection {
+    var oneAndOnly: Element? {
+        return count == 1 ? first : nil
     }
 }

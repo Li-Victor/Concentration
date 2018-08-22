@@ -27,7 +27,11 @@ class ViewController: UIViewController {
     }
     
     
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFlipCountLabel()
+        }
+    }
     
     @IBOutlet private var cardButtons: [UIButton]!
     
@@ -62,7 +66,18 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
         }
-        flipCountLabel.text = "Flips: \(game.flipCount)"
+        updateFlipCountLabel()
+    }
+    
+    private func updateFlipCountLabel() {
+        let attributes: [NSAttributedStringKey: Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        ]
+        
+        let attributedString = NSAttributedString(string: "Flips \(game.flipCount)", attributes: attributes)
+        
+        flipCountLabel.attributedText = attributedString
     }
 }
 
