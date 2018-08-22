@@ -13,10 +13,12 @@ class ViewController: UIViewController {
     private var animalTheme = ["🐶", "🐱", "🦊", "🐸", "🐔", "🐨", "🐧", "🦄"]
     private var sportsTheme = ["⚽️", "🏀", "🏈", "⚾️", "🎾", "🏓", "🏐", "🎱"]
     private var faceTheme = ["🤔", "😀", "😁", "😍", "😕", "😘", "😛", "😓"]
+    private var fruitsTheme = ["🍏", "🍓", "🍆", "🍊", "🍉", "🍋", "🍑", "🍌"]
+    private var handSignsTheme = ["🤘", "👌", "👋", "👎", "👍", "✌️", "👊", "🤙"]
     
     
     func randomTheme() -> [String] {
-        let allThemes = [scaryTheme, animalTheme, sportsTheme, faceTheme]
+        let allThemes = [scaryTheme, animalTheme, sportsTheme, faceTheme, fruitsTheme, handSignsTheme]
         return allThemes[allThemes.count.arc4random]
     }
     

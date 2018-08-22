@@ -26,7 +26,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CLj-w8-fFO">
-                                <rect key="frame" x="16" y="44" width="343" height="232"/>
+                                <rect key="frame" x="16" y="60" width="343" height="232"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="20U-xV-8lW">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
@@ -141,12 +141,13 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9d-z9-moe">
-                                <rect key="frame" x="16" y="292" width="343" height="31"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9d-z9-moe">
+                                <rect key="frame" x="16" y="308" width="343" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="KjV-Y0-eX6"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <state key="normal" title="New Game">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -159,7 +160,7 @@
                         <constraints>
                             <constraint firstItem="S9d-z9-moe" firstAttribute="top" secondItem="CLj-w8-fFO" secondAttribute="bottom" constant="16" id="5pw-I6-p1w"/>
                             <constraint firstItem="S9d-z9-moe" firstAttribute="leading" secondItem="CLj-w8-fFO" secondAttribute="leading" id="5vV-eX-4rk"/>
-                            <constraint firstItem="CLj-w8-fFO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="AWf-xO-DWY"/>
+                            <constraint firstItem="CLj-w8-fFO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="AWf-xO-DWY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qeb-Cm-i3A" secondAttribute="bottom" id="NkR-ab-Hhu"/>
                             <constraint firstItem="Qeb-Cm-i3A" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Scy-CC-GWm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CLj-w8-fFO" secondAttribute="trailing" constant="16" id="Srg-IV-qrC"/>
