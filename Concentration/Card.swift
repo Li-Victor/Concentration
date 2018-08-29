@@ -17,7 +17,6 @@ struct Card: Hashable {
     
     var isFaceUp = false
     var isMatched = false
-    var emoji: String
     
     private var identifier: Int
     private static var identifierFactory = 0
@@ -27,8 +26,7 @@ struct Card: Hashable {
         return identifierFactory
     }
     
-    init(emoji: String) {
+    init() {
         self.identifier = Card.getUniqueIdentifier()
-        self.emoji = emoji
     }
 }

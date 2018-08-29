@@ -10,11 +10,10 @@ import Foundation
 
 struct Concentration {
     private(set) var cards = [Card]()
-    
     private(set) var flipCount = 0
     private(set) var score = 0
     
-    private var emojisSeen: Set<Card>
+    private var cardsSeen: Set<Card>
     
     private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
@@ -27,38 +26,10 @@ struct Concentration {
         }
     }
     
-    mutating func incrementFlipCount() {
-        flipCount = flipCount + 1
-    }
-    
-    mutating func resetFlipCount() {
-        flipCount = 0
-    }
-    
-    mutating private func updateScore(firstEmoji first: Card, secondEmoji second: Card) {
-        
-        // first emoji
-        if (emojisSeen.contains(first)) {
-            self.score -= 1
-        } else {
-            emojisSeen.insert(first)
-        }
-        
-        // second emoji
-        if (emojisSeen.contains(second)) {
-            self.score -= 1
-        } else {
-            emojisSeen.insert(second)
-        }
-        
-    }
-    
     mutating func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index not in cards)")
+        flipCount += 1
         if !cards[index].isMatched {
-            
-            // When two cards are face up and are mismatched, decrement score if any card is in the set
-            // When two cards are face up and matched, score += 2
             
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 // check if cards match
@@ -71,10 +42,22 @@ struct Concentration {
                 } else {
                     // mismatched
                     
-                    // if the set has the emoji, decrement by 1
-                    // if the set doesnt have the emoji, add it to the set
-                    updateScore(firstEmoji: cards[matchIndex], secondEmoji: cards[index])
+                    // if the set has the card, decrement by 1
+                    // if the set doesnt have the card, add to the set
                     
+                    // first
+                    if cardsSeen.contains(cards[matchIndex]) {
+                        self.score -= 1
+                    } else {
+                        cardsSeen.insert(cards[matchIndex])
+                    }
+                    
+                    // second
+                    if cardsSeen.contains(cards[index]) {
+                        self.score -= 1
+                    } else {
+                        cardsSeen.insert(cards[index])
+                    }
                 }
                 cards[index].isFaceUp = true
             } else {
@@ -83,24 +66,28 @@ struct Concentration {
         }
     }
     
+    mutating func resetGame() {
+        flipCount = 0
+        score = 0
+    }
+    
     private mutating func shuffle() {
         for i in stride(from: cards.count - 1, to: 1, by: -1) {
-            let random = i.arc4random
+            let random = i.arc4Random
             self.cards.swapAt(i, random)
         }
     }
 
-    init(numberOfPairsOfCards: Int, emojis: [String]) {
+    init(numberOfPairsOfCards: Int) {
         assert(numberOfPairsOfCards > 0, "Concentration.init(numberOfPairsOfCards\(numberOfPairsOfCards)): you must have at least one pair of cards")
-        assert(numberOfPairsOfCards < emojis.count, "Concentration.init(numberOfPairsOfCards: \(numberOfPairsOfCards), emojis: \(emojis)): you must have the same or more pairs of cards than emojis")
         
-        var e = emojis
-        for _ in 0..<numberOfPairsOfCards {
-            let emoji = e.remove(at: e.count.arc4random)
-            let card = Card(emoji: emoji)
+        for _ in 1...numberOfPairsOfCards {
+            let card = Card()
             cards += [card, card]
         }
-        self.emojisSeen = Set<Card>()
+        self.score = 0
+        self.flipCount = 0
+        self.cardsSeen = Set<Card>()
         shuffle()
     }
 }
