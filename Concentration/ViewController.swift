@@ -33,9 +33,15 @@ class ViewController: UIViewController {
         // assign game to a new Concentration game
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
         emoji = [Card:String]()
-        emojiChoices = randomTheme()
+        emojiChoices = randomEmojiTheme()
+        let (CardColor, BackgroundColor) = randomThemeColor()
+        cardColor = CardColor
+        backgroundColor = BackgroundColor
         updateViewFromModel()
     }
+    
+    private var cardColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+    private var backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     
     private func updateViewFromModel() {
         for index in cardButtons.indices {
@@ -47,9 +53,10 @@ class ViewController: UIViewController {
                 button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             } else {
                 button.setTitle("", for: UIControlState.normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : cardColor
             }
         }
+        view.backgroundColor = backgroundColor
         
         let attributes: [NSAttributedStringKey: Any] = [
             .strokeWidth: 5.0,
@@ -68,12 +75,12 @@ class ViewController: UIViewController {
     private var fruitsTheme = ["🍏", "🍓", "🍆", "🍊", "🍉", "🍋", "🍑", "🍌"]
     private var handSignsTheme = ["🤘", "👌", "👋", "👎", "👍", "✌️", "👊", "🤙"]
     
-    func randomTheme() -> String {
+    func randomEmojiTheme() -> String {
         let allThemes = [scaryTheme, animalTheme, sportsTheme, faceTheme, fruitsTheme, handSignsTheme]
         return allThemes[allThemes.count.arc4Random].joined(separator: "")
     }
     
-    private lazy var emojiChoices = randomTheme()
+    private lazy var emojiChoices = randomEmojiTheme()
     private var emoji = [Card: String]()
     
     private func emoji(for card: Card) -> String {
@@ -82,6 +89,25 @@ class ViewController: UIViewController {
             emoji[card] = String(emojiChoices.remove(at: stringIndex))
         }
         return emoji[card] ?? "?"
+    }
+    
+    private func randomThemeColor() -> (CardColor: UIColor, BackgroundColor: UIColor) {
+        
+        let colors = [
+            (#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)),
+            (#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),
+            (#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)),
+            (#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)),
+            (#colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)),
+            (#colorLiteral(red: 0.5791940689, green: 0.1280144453, blue: 0.5726861358, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)),
+            (#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.5791940689, green: 0.1280144453, blue: 0.5726861358, alpha: 1)),
+            (#colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)),
+            (#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)),
+            (#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)),
+            (#colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1), #colorLiteral(red: 0.5791940689, green: 0.1280144453, blue: 0.5726861358, alpha: 1)),
+            (#colorLiteral(red: 0.5791940689, green: 0.1280144453, blue: 0.5726861358, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1))
+        ]
+        return colors[colors.count.arc4Random]
     }
     
 }
